@@ -87,13 +87,18 @@ def register_plant(update, context):
     plant_name = update.message.text
     new_plant.set_name(plant_name)
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="We welcome {} to the family! Let's work together to take good care of it!".format(new_plant.name),
+                             text="Confirm addition? Use /cancel to stop this process".format(
+                                 new_plant.name),
                              parse_mode='HTML')
     return SAVEPLANT
 
 def save_plant(update, context):
     uid = get_user_id(update, context)
     add_new_plant(uid, new_plant)
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text="We welcome {} to the family! Let's work together to take good care of it!".format(
+                                 new_plant.name),
+                             parse_mode='HTML')
     return ConversationHandler.END
 
 # Adding a plant Conversation

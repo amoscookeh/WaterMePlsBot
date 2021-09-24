@@ -10,7 +10,7 @@ from user import User
 
 # For data handling
 client = MongoClient(
-    "mongodb+srv://watermeplsbot:{}}@cluster0.lwrei.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(
+    "mongodb+srv://watermeplsbot:{}@cluster0.lwrei.mongodb.net/{}?retryWrites=true&w=majority".format(
         PASSWORD, DATABASE), ssl=True)
 db = client['watermeplsdata']
 user_collection = db['user_data']

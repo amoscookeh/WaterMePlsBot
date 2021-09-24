@@ -3,6 +3,7 @@ from datetime import time
 from pymongo import MongoClient
 import os
 
+
 PASSWORD = os.environ['PASSWORD']
 DATABASE = os.environ['DATABASE']
 from plant import Plant

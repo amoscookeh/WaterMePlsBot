@@ -215,6 +215,7 @@ def run_bot():
 
     jobs = job_queue.jobs()
     for job in jobs:
+        print(job.next_t.tzname())
         print(job.next_t)
 
     dispatcher.add_handler(registration_handler)

@@ -20,7 +20,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 # First time starting the bot
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="Welcome to WaterMePlsBot [Beta Test Version]! U+2728",
+                             text="Welcome to WaterMePlsBot [Beta Test Version]!",
                              parse_mode='HTML')
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Before we begin, let me get to know you!\n\nWhat is your name?")
@@ -184,16 +184,18 @@ def thank_you(context):
         context.bot.send_message(chat_id=chat_id, text="{} thanks you for taking good care of it!".format(plant_name))
 
 
+run_count = 0
 def run_bot():
     # Persistence testing
     dict_persistence = DictPersistence()
 
     updater = Updater(token=TOKEN, persistence=dict_persistence, use_context=True)
     dispatcher = updater.dispatcher
+
     job_queue = updater.job_queue
 
     job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=12, minute=0, second=0))
-    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=17, minute=0, second=0))
+    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=17, minute=13, second=0))
 
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=22, minute=0, second=0))
 

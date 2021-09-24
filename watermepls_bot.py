@@ -214,6 +214,7 @@ def run_bot():
     job_queue.start()
 
     jobs = job_queue.jobs()
+    print("Now: " + str(datetime.now()))
     for job in jobs:
         print(job.next_t)
 

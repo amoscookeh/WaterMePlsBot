@@ -19,3 +19,4 @@ class User:
             'reminder_timings': self.reminder_timings,
             'plants': self.plants
         }
+        return user_dict

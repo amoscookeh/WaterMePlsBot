@@ -57,7 +57,7 @@ def get_all_plant_name_with_id():
         plant_name_with_id.append(
             {
                 'chat_id': doc['chat_id'],
-                'plant': doc['plants']['name']
+                'plant': doc['plants'][0]['name']
             }
         )
 

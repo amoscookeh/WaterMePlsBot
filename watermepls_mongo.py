@@ -8,9 +8,6 @@ DATABASE = os.environ['DATABASE']
 from plant import Plant
 from user import User
 
-# PASSWORD = 'Weilsoma13'
-# DATABASE = 'Cluster0'
-
 # For data handling
 client = MongoClient(
     "mongodb+srv://watermeplsbot:{}}@cluster0.lwrei.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(

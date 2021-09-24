@@ -13,7 +13,6 @@ from watermepls_mongo import add_new_user, add_new_plant, add_new_timing, get_al
 
 PORT = int(os.environ.get('PORT', 5000))
 TOKEN = os.environ['TOKEN']
-# TOKEN = '1947002176:AAGiFdf4haHwaCRNY3C05SjrzfouDdSykug'
 
 # For logging purposes
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

@@ -213,8 +213,8 @@ def run_bot():
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=22, minute=0, second=0))
     job_queue.start()
 
+    print(datetime.tzinfo)
     jobs = job_queue.jobs()
-    print("Now: " + str(datetime.now().tzname()))
     for job in jobs:
         print(job.next_t)
 

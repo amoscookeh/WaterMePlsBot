@@ -207,10 +207,11 @@ def run_bot():
 
     job_queue = updater.job_queue
 
-    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=0, minute=0, second=0))
-    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=17, minute=46, second=0))
+    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=4, minute=0, second=0))
+    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=9, minute=0, second=0))
 
-    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=22, minute=0, second=0))
+    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))
+    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=13, minute=16, second=0))
     job_queue.start()
 
     jobs = job_queue.jobs()

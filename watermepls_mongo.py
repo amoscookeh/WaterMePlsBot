@@ -26,6 +26,7 @@ def add_new_user(uid: str, name: str, chat_id: str):
 
 
 def add_new_plant(uid: str, plant: Plant):
+    print("_id: " + uid)
     plant_dict = plant.plant_to_dict()
     try:
         user_collection.find_one_and_update({'_id': uid}, {'$push': {'plants': plant_dict}})

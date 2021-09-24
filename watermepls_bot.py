@@ -69,6 +69,10 @@ def create_user(update, context):
     return ConversationHandler.END
 
 
+def cancel(update, context):
+    return ConversationHandler.END
+
+
 # First Time Login Conversation
 USERNAME = range(1)
 
@@ -81,7 +85,7 @@ registration_handler = ConversationHandler(
             )
         ],
     },
-    # fallbacks=[CommandHandler('ready', ready), CommandHandler('cancelreg', cancel_reg)],
+    fallbacks=[CommandHandler('cancel', cancel)],
     conversation_timeout=300
 )
 
@@ -135,7 +139,7 @@ add_plant_handler = ConversationHandler(
             ),
         ],
     },
-    # fallbacks=[CommandHandler('ready', ready), CommandHandler('cancelreg', cancel_reg)],
+    fallbacks=[CommandHandler('cancel', cancel)],
     conversation_timeout=300
 )
 

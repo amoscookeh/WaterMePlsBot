@@ -202,7 +202,8 @@ def run_bot():
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
-                          url_path='https://watermeplsbot.herokuapp.com/' + TOKEN)
+                          url_path=TOKEN,
+                          webhook_url='https://watermeplsbot.herokuapp.com/' + TOKEN)
 
     # updater.bot.setWebhook('https://watermeplsbot.herokuapp.com/' + TOKEN)
 

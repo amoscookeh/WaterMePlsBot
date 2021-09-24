@@ -206,6 +206,6 @@ def run_bot():
                           port=int(PORT),
                           url_path=TOKEN)
 
-    updater.bot.setWebhook('https://paymeplsbot.herokuapp.com/' + TOKEN)
+    updater.bot.setWebhook('https://watermeplsbot.herokuapp.com/' + TOKEN)
 
     updater.idle()

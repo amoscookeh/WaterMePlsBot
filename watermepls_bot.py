@@ -69,32 +69,35 @@ def add_plant(update, context):
                              text="Time to add a plant! \nFirstly, what type of plant is this? (Eg. Sunflower, "
                                   "Cactus, etc.)",
                              parse_mode='HTML')
-    plant_type = update.message.text
-    new_plant.set_type(plant_type)
     return ADDPLANT
 
 
 def ask_for_plant_name(update, context):
+    plant_type = update.message.text
+    new_plant.set_type(plant_type)
+
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="What is your name for this plant? (Research has shown that naming your plant makes "
                                   "it healthier!)",
                              parse_mode='HTML')
-    plant_name = update.message.text
-    new_plant.set_name(plant_name)
     return REGISTERPLANT
 
 
 def register_plant(update, context):
-    uid = get_user_id(update, context)
-    add_new_plant(uid, new_plant)
+    plant_name = update.message.text
+    new_plant.set_name(plant_name)
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="We welcome {} to the family! Let's work together to take good care of it!".format(new_plant.name),
                              parse_mode='HTML')
+    return SAVEPLANT
+
+def save_plant(update, context):
+    uid = get_user_id(update, context)
+    add_new_plant(uid, new_plant)
     return ConversationHandler.END
 
-
 # Adding a plant Conversation
-ADDPLANT,REGISTERPLANT = range(2)
+ADDPLANT,REGISTERPLANT, SAVEPLANT = range(3)
 
 add_plant_handler = ConversationHandler(
     entry_points=[CommandHandler('add_plant', add_plant)],
@@ -107,6 +110,11 @@ add_plant_handler = ConversationHandler(
         REGISTERPLANT: [
             MessageHandler(
                 Filters.text & (~Filters.command), register_plant
+            ),
+        ],
+        SAVEPLANT: [
+            MessageHandler(
+                Filters.text & (~Filters.command), save_plant
             ),
         ],
     },
@@ -195,7 +203,7 @@ def run_bot():
     job_queue = updater.job_queue
 
     job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=12, minute=0, second=0))
-    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=17, minute=13, second=0))
+    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=17, minute=25, second=0))
 
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=22, minute=0, second=0))
 

@@ -28,14 +28,14 @@ def add_new_user(uid: str, name: str, chat_id: str):
 def add_new_plant(uid: str, plant: Plant):
     plant_dict = plant.plant_to_dict()
     try:
-        user_collection.find_one_and_update({'_id': uid}, {'$push': {'user_data.plants': plant_dict}})
+        user_collection.find_one_and_update({'_id': uid}, {'$push': {'plants': plant_dict}})
     except Exception:
         print("Error occured while saving plant")
 
 
 def add_new_timing(uid: str, timing: time):
     try:
-        user_collection.find_one_and_update({'_id': uid}, {'$push': {'user_data.reminder_timings': timing}})
+        user_collection.find_one_and_update({'_id': uid}, {'$push': {'reminder_timings': timing}})
     except Exception:
         print("Error occured while saving new timing")
 

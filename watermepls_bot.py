@@ -99,7 +99,7 @@ def register_plant(update, context):
 ADDPLANT,REGISTERPLANT = range(2)
 
 add_plant_handler = ConversationHandler(
-    entry_points=[CommandHandler('add plant', add_plant)],
+    entry_points=[CommandHandler('add_plant', add_plant)],
     states={
         ADDPLANT: [
             MessageHandler(

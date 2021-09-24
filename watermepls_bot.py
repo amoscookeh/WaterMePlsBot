@@ -18,33 +18,6 @@ TOKEN = os.environ['TOKEN']
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
-def run_bot():
-    # Persistence testing
-    dict_persistence = DictPersistence()
-
-    updater = Updater(token=TOKEN, persistence=dict_persistence, use_context=True)
-    dispatcher = updater.dispatcher
-    job_queue = updater.job_queue
-
-    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=12, minute=0, second=0))
-    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=17, minute=0, second=0))
-
-    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=22, minute=0, second=0))
-
-    dispatcher.add_handler(registration_handler)
-    dispatcher.add_handler(add_plant_handler)
-    # dispatcher.add_handler(InlineQueryHandler(inlinequery))
-    # dispatcher.add_handler(CallbackQueryHandler(callbackhandle))
-    # dispatcher.add_handler(CommandHandler('help', help))
-
-    # updater.start_webhook(listen="0.0.0.0",
-    #                       port=int(PORT),
-    #                       url_path=TOKEN)
-
-    # updater.bot.setWebhook('https://paymeplsbot.herokuapp.com/' + TOKEN)
-
-    updater.idle()
-
 
 # First time starting the bot
 def start(update, context):
@@ -211,3 +184,28 @@ def thank_you(context):
         chat_id = data['chat_id']
         plant_name = data['plant']
         context.bot.send_message(chat_id=chat_id, text="{} thanks you for taking good care of it!".format(plant_name))
+
+
+def run_bot():
+    # Persistence testing
+    dict_persistence = DictPersistence()
+
+    updater = Updater(token=TOKEN, persistence=dict_persistence, use_context=True)
+    dispatcher = updater.dispatcher
+    job_queue = updater.job_queue
+
+    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=12, minute=0, second=0))
+    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=17, minute=0, second=0))
+
+    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=22, minute=0, second=0))
+
+    dispatcher.add_handler(registration_handler)
+    dispatcher.add_handler(add_plant_handler)
+
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN)
+
+    updater.bot.setWebhook('https://paymeplsbot.herokuapp.com/' + TOKEN)
+
+    updater.idle()

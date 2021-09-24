@@ -9,7 +9,7 @@ from helper import get_user_id, get_chat_id, get_today_midnight
 from plant import Plant
 from watermepls_mongo import add_new_user, add_new_plant, add_new_timing, get_all_ids, get_all_plant_name_with_id
 
-PORT = 80
+PORT = int(os.environ.get('PORT', 5000))
 TOKEN = os.environ['TOKEN']
 
 # For logging purposes
@@ -202,8 +202,8 @@ def run_bot():
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
-                          url_path=TOKEN)
+                          url_path='https://watermeplsbot.herokuapp.com/' + TOKEN)
 
-    updater.bot.setWebhook('https://watermeplsbot.herokuapp.com/' + TOKEN)
+    # updater.bot.setWebhook('https://watermeplsbot.herokuapp.com/' + TOKEN)
 
     updater.idle()

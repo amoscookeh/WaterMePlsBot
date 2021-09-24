@@ -2,22 +2,6 @@
 from datetime import datetime
 
 
-def format_user_data(update, context):
-    user = update.message.from_user
-    user_id = user['id']
-    username = user['username']
-    context.user_data["polls"] = {}
-    context.user_data["poll count"] = 0
-    context.user_data["Name"] = ""
-    context.user_data["Username"] = username
-    context.user_data["payment methods"] = {}
-    post = {'_id': user_id, 'user_data': context.user_data}
-    try:
-        collection.insert_one(post)
-    except:
-        collection.find_one_and_replace({'_id': user_id}, {'_id': user_id, 'user_data': context.user_data})
-
-
 def get_user_id(update, context):
     user = update.message.from_user
     user_id = user['id']

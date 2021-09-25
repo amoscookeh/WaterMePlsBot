@@ -20,7 +20,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 # First time starting the bot
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="Welcome to WaterMePlsBot [Beta Test Version]!",
+                             text="Welcome to WaterMePlsBot 💦🪴 [Beta Test Version]!",
                              parse_mode='HTML')
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Before we begin, let me get to know you!\n\nWhat is your name?")
@@ -35,8 +35,8 @@ def create_user(update, context):
     add_new_user(uid, name, chat_id)
 
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="Thanks {} for joining the WaterMePls community!\n\nlet's start by adding your "
-                                  "plants!".format(name))
+                             text="Thanks {} for joining the WaterMePls 💦🪴 community!\n\nlet's start by adding your "
+                                  "plants!\n\nUse /add_plant to invite some plant friends to the fam!".format(name))
     return ConversationHandler.END
 
 
@@ -66,7 +66,7 @@ new_plant = Plant()
 
 def add_plant(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="Time to add a plant! \nFirstly, what type of plant is this? (Eg. Sunflower, "
+                             text="Time to add a plant 🌲🌳🌴🍀🎍🪴! \nFirstly, what type of plant is this? (Eg. Sunflower, "
                                   "Cactus, etc.)",
                              parse_mode='HTML')
     return ADDPLANT
@@ -78,7 +78,7 @@ def ask_for_plant_name(update, context):
 
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="What is your name for this plant? (Research has shown that naming your plant makes "
-                                  "it healthier!)",
+                                  "it 5x healthier!)",
                              parse_mode='HTML')
     return REGISTERPLANT
 
@@ -96,7 +96,7 @@ def save_plant(update, context):
     uid = get_user_id(update, context)
     add_new_plant(uid, new_plant)
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="We welcome {} to the family! Let's work together to take good care of it!".format(
+                             text="We welcome {} to the family✨! Let's work together to take good care of it💚!".format(
                                  new_plant.name),
                              parse_mode='HTML')
     return ConversationHandler.END

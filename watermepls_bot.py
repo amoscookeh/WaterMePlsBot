@@ -12,7 +12,7 @@ from feedback import Feedback
 from helper import get_user_id, get_chat_id, get_today_midnight
 from plant import Plant
 from watermepls_mongo import add_new_user, add_new_plant, add_new_timing, get_all_ids, get_all_plant_name_with_id, \
-    check_existing_user, add_new_feedback
+    check_existing_user, add_new_feedback, edit_username
 from weather_api import get_weather_forecast, get_weather_msg
 
 PORT = int(os.environ.get('PORT', 8443))
@@ -248,6 +248,7 @@ def edit_user(update, context):
 
 def user_name_changed(update, context):
     new_name = update.message.text
+    edit_username(update.effective_chat.id, new_name)
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Okie dokie! I will now remember you as {}!".format(new_name))
     return ConversationHandler.END

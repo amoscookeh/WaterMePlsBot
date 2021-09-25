@@ -79,4 +79,4 @@ def add_new_feedback(uid: str, user_experience: str, user_feedback: str):
 
 
 def edit_username(uid: str, new_name: str):
-    return user_collection.find_one_and_update({'_id': uid}, {'$set': {'name': new_name}})
+    return user_collection.find_one_and_update({'_id': str(uid)}, {'$set': {'name': new_name}})

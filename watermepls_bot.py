@@ -394,6 +394,12 @@ def check_weather(context):
         context.bot.send_message(chat_id="26206762", text=weather_string)
 
 
+def weather_2h(update, context):
+    weather_string = get_weather_forecast('Clementi')
+
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Latest weather updates: {}".format(weather_string))
+
+
 def run_bot():
     # Persistence testing
     dict_persistence = DictPersistence()
@@ -419,6 +425,7 @@ def run_bot():
     dispatcher.add_handler(add_plant_handler)
     dispatcher.add_handler(about_us_handler)
     dispatcher.add_handler(edit_user_handler)
+    dispatcher.add_handler(CommandHandler('2H_weather', weather_2h))
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),

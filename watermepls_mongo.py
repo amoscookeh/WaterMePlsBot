@@ -76,3 +76,7 @@ def add_new_feedback(uid: str, user_experience: str, user_feedback: str):
     new_post = new_feedback.feedback_to_dict()
     new_post['_id'] = uid
     return feedback_collection.insert_one(new_post)
+
+
+def edit_username(uid: str, new_name: str):
+    return user_collection.find_one_and_update({'_id': uid}, {'$set': {'name': new_name}})

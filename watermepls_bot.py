@@ -224,6 +224,33 @@ about_us_handler = ConversationHandler(
     conversation_timeout=300
 )
 
+def edit_user(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text="What would you like to change your name to?")
+    return DONE
+
+def user_name_changed(update, context):
+    new_name = update.message.text
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text="Okie dokie! I will now remember you as {}!".format(new_name))
+    return ConversationHandler.END
+
+# Change username Conversation
+DONE = range(1)
+
+edit_user_handler = ConversationHandler(
+    entry_points=[CommandHandler('edit_user', edit_user)],
+    states={
+        DONE: [
+            MessageHandler(
+                Filters.text & (~Filters.command), user_name_changed
+            )
+        ],
+    },
+    fallbacks=[CommandHandler('cancel', cancel)],
+    conversation_timeout=300
+)
+
 
 # # Adding a reminder
 # time_selected = datetime.now().time()
@@ -356,6 +383,7 @@ def run_bot():
     dispatcher.add_handler(registration_handler)
     dispatcher.add_handler(add_plant_handler)
     dispatcher.add_handler(about_us_handler)
+    dispatcher.add_handler(edit_user_handler)
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),

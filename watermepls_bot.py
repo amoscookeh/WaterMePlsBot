@@ -7,6 +7,8 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResu
 from uuid import uuid4
 import logging
 import os
+
+from feedback import Feedback
 from helper import get_user_id, get_chat_id, get_today_midnight
 from plant import Plant
 from watermepls_mongo import add_new_user, add_new_plant, add_new_timing, get_all_ids, get_all_plant_name_with_id, \
@@ -107,6 +109,7 @@ def register_plant(update, context):
                              parse_mode='HTML')
     return SAVEPLANT
 
+
 def save_plant(update, context):
     uid = get_user_id(update, context)
     add_new_plant(uid, new_plant)
@@ -116,8 +119,9 @@ def save_plant(update, context):
                              parse_mode='HTML')
     return ConversationHandler.END
 
+
 # Adding a plant Conversation
-ADDPLANT,REGISTERPLANT, SAVEPLANT = range(3)
+ADDPLANT, REGISTERPLANT, SAVEPLANT = range(3)
 
 add_plant_handler = ConversationHandler(
     entry_points=[CommandHandler('add_plant', add_plant)],
@@ -142,9 +146,12 @@ add_plant_handler = ConversationHandler(
     conversation_timeout=300
 )
 
+
 def about_us(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="I see that you're curious about the creators of WaterMePlsBot!\n\nabout -> Find out more about this bot!\n\nfeedback -> Give us some feedback!\n\nWell, How can I help you? Type the option you want to continue! ")
+                             text="I see that you're curious about the creators of WaterMePlsBot!\n\nabout -> Find "
+                                  "out more about this bot!\n\nfeedback -> Give us some feedback!\n\nWell, "
+                                  "How can I help you? Type the option you want to continue! ")
     return WHAT_TO_DO
 
 
@@ -174,30 +181,37 @@ def ask_for_feedback(update, context):
                              text="So... How has your experience been?")
     return FEEDBACK
 
-feedback_msg = ""
+
+new_feedback = Feedback(None, None)
+
+
 def feedback(update, context):
-    feedback_msg = update.message.text
+    new_feedback.user_experience = update.message.text
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Thanks for letting me know!")
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="Well, to help me improve, do you have any feature ideas or general feedback you'd like to give?")
+                             text="Well, to help me improve, do you have any feature ideas or general feedback you'd "
+                                  "like to give?")
     return IDEAS
 
-ideas_msg = ""
+
 def ideas(update, context):
-    ideas_msg = update.message.text
+    new_feedback.feedback = update.message.text
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="I appreciate that!")
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="Well, thank you once again for trying to help WaterMePlsBot improve! This matters alot to me and let us help more people become capable Plant Parents!")
+                             text="Well, thank you once again for trying to help WaterMePlsBot improve! This matters "
+                                  "alot to me and let us help more people become capable Plant Parents!")
 
-    add_new_feedback(update.effective_chat.id, feedback_msg, ideas_msg)
+    add_new_feedback(update.effective_chat.id, new_feedback.user_experience, new_feedback.feedback)
 
     # Send this feedback to myself
     context.bot.send_message(chat_id="26206762",
-                             text="WaterMePlsBot Feedback from {}:\n\nExperience: {}\n\nIdeas/Feedback: {}".format(update.effective_chat.id, feedback_msg, ideas_msg))
+                             text="WaterMePlsBot Feedback from {}:\n\nExperience: {}\n\nIdeas/Feedback: {}".format(
+                                 update.effective_chat.id, new_feedback.user_experience, new_feedback.feedback))
 
     return ConversationHandler.END
+
 
 # About us Login Conversation
 WHAT_TO_DO, FEEDBACK, IDEAS = range(3)
@@ -225,16 +239,19 @@ about_us_handler = ConversationHandler(
     conversation_timeout=300
 )
 
+
 def edit_user(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="What would you like to change your name to?")
     return DONE
+
 
 def user_name_changed(update, context):
     new_name = update.message.text
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Okie dokie! I will now remember you as {}!".format(new_name))
     return ConversationHandler.END
+
 
 # Change username Conversation
 DONE = range(1)
@@ -251,7 +268,6 @@ edit_user_handler = ConversationHandler(
     fallbacks=[CommandHandler('cancel', cancel)],
     conversation_timeout=300
 )
-
 
 # # Adding a reminder
 # time_selected = datetime.now().time()
@@ -308,9 +324,10 @@ reminder_messages = [
     "Have a break, go hang with your 🪴plants🪴!"
 ]
 
+
 def check_reminder(context):
     total_num_of_msgs = len(reminder_messages)
-    reminder_msg_inx = random.randint(0, total_num_of_msgs-1)
+    reminder_msg_inx = random.randint(0, total_num_of_msgs - 1)
     msg_of_the_day = reminder_messages[reminder_msg_inx]
     chat_ids = get_all_ids()
 
@@ -328,6 +345,7 @@ reminder2_messages = [
     "Have a break, go hang with your 🪴plants🪴!"
 ]
 
+
 def check_reminder_2(context):
     total_num_of_msgs = len(reminder2_messages)
     reminder_msg_inx = random.randint(0, total_num_of_msgs - 1)
@@ -336,6 +354,7 @@ def check_reminder_2(context):
 
     for chat_id in chat_ids:
         context.bot.send_message(chat_id=chat_id, text=msg_of_the_day)
+
 
 # Reminder 2
 thank_you_messages = [
@@ -348,6 +367,7 @@ thank_you_messages = [
     "Thanks for giving me life🪴!"
 ]
 
+
 def thank_you(context):
     plant_name_with_id = get_all_plant_name_with_id()
 
@@ -358,7 +378,8 @@ def thank_you(context):
     for data in plant_name_with_id:
         chat_id = data['chat_id']
         plant_name = data['plant']
-        context.bot.send_message(chat_id=chat_id, text="Dear Plant Parent,\n\n{}\n\nLove, 💚{}💚".format(plant_name, msg_of_the_day))
+        context.bot.send_message(chat_id=chat_id,
+                                 text="Dear Plant Parent,\n\n{}\n\nLove, 💚{}💚".format(plant_name, msg_of_the_day))
 
 
 def check_weather(context):
@@ -376,9 +397,10 @@ def run_bot():
 
     job_queue = updater.job_queue
 
-    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=4, minute=0, second=0)) # Reminder 1
-    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=9, minute=0, second=0)) # Reminder 2
-    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0)) # Thank you
+    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=4, minute=0, second=0))  # Reminder 1
+    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6),
+                        time=time(hour=9, minute=0, second=0))  # Reminder 2
+    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))  # Thank you
     job_queue.run_repeating(check_weather, interval=7200, first=60)  # Weather
     job_queue.start()
 

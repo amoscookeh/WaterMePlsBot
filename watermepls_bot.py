@@ -11,6 +11,7 @@ from helper import get_user_id, get_chat_id, get_today_midnight
 from plant import Plant
 from watermepls_mongo import add_new_user, add_new_plant, add_new_timing, get_all_ids, get_all_plant_name_with_id, \
     check_existing_user, add_new_feedback
+from weather_api import get_weather_forecast
 
 PORT = int(os.environ.get('PORT', 8443))
 TOKEN = os.environ['TOKEN']
@@ -360,6 +361,12 @@ def thank_you(context):
         context.bot.send_message(chat_id=chat_id, text="Dear Plant Parent,\n\n{}\n\nLove, 💚{}💚".format(plant_name, msg_of_the_day))
 
 
+def check_weather(context):
+    weather_string = get_weather_forecast('Clementi')
+    context.bot.send_message(chat_id="26206762",
+                             text="Weather: {}".format(weather_string))
+
+
 def run_bot():
     # Persistence testing
     dict_persistence = DictPersistence()
@@ -369,10 +376,11 @@ def run_bot():
 
     job_queue = updater.job_queue
 
-    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=4, minute=0, second=0))
-    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=9, minute=0, second=0))
-
-    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))
+    job_queue.run_daily(check_reminder, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=4, minute=0, second=0)) # Reminder 1
+    job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=9, minute=0, second=0)) # Reminder 2
+    job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0)) # Thank you
+    job_queue.run_repeating(check_weather, time(hour=2, minute=0, second=0, microsecond=0),
+                            time(hour=17, minute=55, second=0, microsecond=0))  # Weather
     job_queue.start()
 
     jobs = job_queue.jobs()

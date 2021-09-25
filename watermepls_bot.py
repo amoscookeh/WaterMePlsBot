@@ -170,6 +170,10 @@ def about(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Welcome to 💦WaterMePlsBot💦! This bot was built for the sole purpose of making"
                                   " plant care a habit for all you young aspiring plant parents 💚"
+                                  "\n\nHow it works:"
+                                  "\n\n1. Twice a day, WaterMePlsBot will remind you to care for your plants"
+                                  "\n2. WaterMePlsBot will also update you in the case of unfavourable weather"
+                                  "\n3. WaterMePlsBot will continually improve with your feedback"
                                   "\n\nProudly brought to you by the creator of @PayMePls_Bot and @WeirdTalkBot")
     return ConversationHandler.END
 

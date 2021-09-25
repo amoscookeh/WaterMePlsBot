@@ -13,7 +13,7 @@ from helper import get_user_id, get_chat_id, get_today_midnight
 from plant import Plant
 from watermepls_mongo import add_new_user, add_new_plant, add_new_timing, get_all_ids, get_all_plant_name_with_id, \
     check_existing_user, add_new_feedback
-from weather_api import get_weather_forecast
+from weather_api import get_weather_forecast, get_weather_msg
 
 PORT = int(os.environ.get('PORT', 8443))
 TOKEN = os.environ['TOKEN']
@@ -384,8 +384,14 @@ def thank_you(context):
 
 def check_weather(context):
     weather_string = get_weather_forecast('Clementi')
-    context.bot.send_message(chat_id="26206762",
-                             text="Weather: {}".format(weather_string))
+    message = get_weather_msg(weather_string)
+
+    if message is not None:
+        chat_ids = get_all_ids()
+        for chat_id in chat_ids:
+            context.bot.send_message(chat_id=chat_id, text=message)
+    else:
+        context.bot.send_message(chat_id="26206762", text=weather_string)
 
 
 def run_bot():

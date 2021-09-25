@@ -3,6 +3,7 @@ from datetime import time
 from pymongo import MongoClient
 import os
 
+from feedback import Feedback
 
 PASSWORD = os.environ['PASSWORD']
 DATABASE = os.environ['DATABASE']
@@ -15,6 +16,7 @@ client = MongoClient(
         PASSWORD, DATABASE), ssl=True)
 db = client['watermeplsdata']
 user_collection = db['user_data']
+feedback_collection = db['feedback']
 
 
 def add_new_user(uid: str, name: str, chat_id: str):
@@ -23,6 +25,11 @@ def add_new_user(uid: str, name: str, chat_id: str):
     user_post['_id'] = uid
     user_post['chat_id'] = chat_id
     return user_collection.insert_one(user_post)
+
+
+def check_existing_user(uid: str):
+    return user_collection.find({'_id': uid}).count() > 0
+
 
 
 def add_new_plant(uid: str, plant: Plant):
@@ -62,3 +69,10 @@ def get_all_plant_name_with_id():
         )
 
     return plant_name_with_id
+
+
+def add_new_feedback(uid: str, user_experience: str, user_feedback: str):
+    new_feedback = Feedback(user_experience, user_feedback)
+    new_post = new_feedback.feedback_to_dict()
+    new_post['_id'] = uid
+    return feedback_collection.insert_one(new_post)

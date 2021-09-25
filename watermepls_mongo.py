@@ -74,7 +74,7 @@ def get_all_plant_name_with_id():
 def add_new_feedback(uid: str, user_experience: str, user_feedback: str):
     new_feedback = Feedback(user_experience, user_feedback)
     new_post = new_feedback.feedback_to_dict()
-    new_post['_id'] = uid
+    new_post['uid'] = uid
     return feedback_collection.insert_one(new_post)
 
 

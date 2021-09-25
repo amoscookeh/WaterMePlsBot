@@ -380,7 +380,7 @@ def run_bot():
     job_queue.run_daily(check_reminder_2, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=9, minute=0, second=0)) # Reminder 2
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0)) # Thank you
     job_queue.run_repeating(check_weather, time(hour=2, minute=0, second=0, microsecond=0),
-                            time(hour=17, minute=55, second=0, microsecond=0))  # Weather
+                            time(hour=17, minute=59, second=0, microsecond=0))  # Weather
     job_queue.start()
 
     jobs = job_queue.jobs()

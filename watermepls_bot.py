@@ -355,6 +355,7 @@ def run_bot():
 
     dispatcher.add_handler(registration_handler)
     dispatcher.add_handler(add_plant_handler)
+    dispatcher.add_handler(about_us_handler)
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),

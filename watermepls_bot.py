@@ -425,7 +425,7 @@ def run_bot():
     dispatcher.add_handler(add_plant_handler)
     dispatcher.add_handler(about_us_handler)
     dispatcher.add_handler(edit_user_handler)
-    dispatcher.add_handler(CommandHandler('2H_weather', weather_2h))
+    dispatcher.add_handler(CommandHandler('weather2h', weather_2h))
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),

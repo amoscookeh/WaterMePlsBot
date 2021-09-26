@@ -390,7 +390,7 @@ def thank_you(context):
         except Exception:
             plant_name = "Your plant (Give me a name pls)"
         context.bot.send_message(chat_id=chat_id,
-                                 text="Dear Plant Parent,\n\n{}\n\nLove, 💚{}💚".format(plant_name, msg_of_the_day))
+                                 text="Dear Plant Parent,\n\n{}\n\nLove, 💚{}💚".format(msg_of_the_day, plant_name))
 
 
 def check_weather(context):

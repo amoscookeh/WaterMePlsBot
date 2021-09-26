@@ -421,7 +421,6 @@ def run_bot():
                         time=time(hour=9, minute=0, second=0))  # Reminder 2
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))  # Thank you
     job_queue.run_repeating(check_weather, interval=7200, first=60)  # Weather
-    job_queue.run_once(check_reminder, 60)  # TODO: Remove once Reminder is tested
     job_queue.start()
 
     jobs = job_queue.jobs()

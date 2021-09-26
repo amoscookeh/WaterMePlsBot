@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from random import random
+import random
 
 import requests
 

@@ -61,12 +61,20 @@ def get_all_plant_name_with_id():
     plant_name_with_id = []
 
     for doc in search:
-        plant_name_with_id.append(
-            {
-                'chat_id': doc['chat_id'],
-                'plant': doc['plants'][0]['name']
-            }
-        )
+        try:
+            plant_name_with_id.append(
+                {
+                    'chat_id': doc['chat_id'],
+                    'plant': doc['plants'][0]['name']
+                }
+            )
+        except Exception:
+            plant_name_with_id.append(
+                {
+                    'chat_id': doc['chat_id'],
+                    'plant': "Your plant (Give me a name pls)"
+                }
+            )
 
     return plant_name_with_id
 

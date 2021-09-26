@@ -381,7 +381,7 @@ def thank_you(context):
 
     total_num_of_msgs = len(thank_you_messages)
     thank_you_messages_idx = random.randint(0, total_num_of_msgs - 1)
-    msg_of_the_day = reminder2_messages[thank_you_messages_idx]
+    msg_of_the_day = thank_you_messages[thank_you_messages_idx]
 
     for data in plant_name_with_id:
         chat_id = data['chat_id']
@@ -435,7 +435,6 @@ def run_bot():
                         time=time(hour=9, minute=0, second=0))  # Reminder 2
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))  # Thank you
     job_queue.run_repeating(check_weather, interval=7200, first=60)  # Weather
-    job_queue.run_once(thank_you, 30)  # Thank you
     job_queue.start()
 
     jobs = job_queue.jobs()

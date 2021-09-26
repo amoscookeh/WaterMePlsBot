@@ -385,7 +385,10 @@ def thank_you(context):
 
     for data in plant_name_with_id:
         chat_id = data['chat_id']
-        plant_name = data['plant']
+        try:
+            plant_name = data['plant']
+        except Exception:
+            plant_name = "Your plant (Give me a name pls)"
         context.bot.send_message(chat_id=chat_id,
                                  text="Dear Plant Parent,\n\n{}\n\nLove, 💚{}💚".format(plant_name, msg_of_the_day))
 
@@ -411,10 +414,11 @@ def weather_2h(update, context):
 def nature_fact(update, context):
     fact = get_nature_facts()
 
+    msg = "🌲NATURE🌲 FACT: {}\n\nCredits: {}".format(fact['title'], fact['url'])
+
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="🌲NATURE🌲 FACT: {}\n\nCredits: {}".format(fact['title'], fact['url'])
-    )
+        text=msg)
 
 
 def run_bot():
@@ -431,6 +435,7 @@ def run_bot():
                         time=time(hour=9, minute=0, second=0))  # Reminder 2
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))  # Thank you
     job_queue.run_repeating(check_weather, interval=7200, first=60)  # Weather
+    job_queue.run_once(thank_you)  # Thank you
     job_queue.start()
 
     jobs = job_queue.jobs()

@@ -9,6 +9,7 @@ import logging
 import os
 
 from feedback import Feedback
+from fun_facts_api import get_nature_facts
 from helper import get_user_id, get_chat_id, get_today_midnight
 from plant import Plant
 from watermepls_mongo import add_new_user, add_new_plant, add_new_timing, get_all_ids, get_all_plant_name_with_id, \
@@ -407,6 +408,15 @@ def weather_2h(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Latest weather updates: {}".format(weather_string))
 
 
+def nature_fact(update, context):
+    fact = get_nature_facts()
+
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="🌲NATURE🌲 FACT: {}\n\n{}\n\nCredits: {}".format(fact['title'], fact['body'], fact['url'])
+    )
+
+
 def run_bot():
     # Persistence testing
     dict_persistence = DictPersistence()
@@ -433,6 +443,7 @@ def run_bot():
     dispatcher.add_handler(about_us_handler)
     dispatcher.add_handler(edit_user_handler)
     dispatcher.add_handler(CommandHandler('weather2h', weather_2h))
+    dispatcher.add_handler(CommandHandler('nature_fact', nature_fact))
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),

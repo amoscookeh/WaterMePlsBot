@@ -1,5 +1,5 @@
 from datetime import datetime, time
-from random import random
+from random import randint
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, InlineQueryHandler, \
     CallbackQueryHandler, DictPersistence
@@ -332,7 +332,7 @@ reminder_messages = [
 
 def check_reminder(context):
     total_num_of_msgs = len(reminder_messages)
-    reminder_msg_inx = random.randint(0, total_num_of_msgs - 1)
+    reminder_msg_inx = randint(0, total_num_of_msgs - 1)
     msg_of_the_day = reminder_messages[reminder_msg_inx]
     chat_ids = get_all_ids()
 
@@ -353,7 +353,7 @@ reminder2_messages = [
 
 def check_reminder_2(context):
     total_num_of_msgs = len(reminder2_messages)
-    reminder_msg_inx = random.randint(0, total_num_of_msgs - 1)
+    reminder_msg_inx = randint(0, total_num_of_msgs - 1)
     msg_of_the_day = reminder2_messages[reminder_msg_inx]
     chat_ids = get_all_ids()
 
@@ -377,7 +377,7 @@ def thank_you(context):
     plant_name_with_id = get_all_plant_name_with_id()
 
     total_num_of_msgs = len(thank_you_messages)
-    thank_you_messages_idx = random.randint(0, total_num_of_msgs - 1)
+    thank_you_messages_idx = randint(0, total_num_of_msgs - 1)
     msg_of_the_day = reminder2_messages[thank_you_messages_idx]
 
     for data in plant_name_with_id:
@@ -419,6 +419,7 @@ def run_bot():
                         time=time(hour=9, minute=0, second=0))  # Reminder 2
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))  # Thank you
     job_queue.run_repeating(check_weather, interval=7200, first=60)  # Weather
+    job_queue.run_once(check_weather, 60)  # Weather
     job_queue.start()
 
     jobs = job_queue.jobs()

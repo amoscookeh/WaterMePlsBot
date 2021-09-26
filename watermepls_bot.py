@@ -413,7 +413,7 @@ def nature_fact(update, context):
 
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="🌲NATURE🌲 FACT: {}\n\n{}\n\nCredits: {}".format(fact['title'], fact['body'], fact['url'])
+        text="🌲NATURE🌲 FACT: {}\n\nCredits: {}".format(fact['title'], fact['url'])
     )
 
 

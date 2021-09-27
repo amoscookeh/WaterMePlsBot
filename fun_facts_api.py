@@ -3,8 +3,7 @@ import os
 import praw
 import random
 
-# PASSWORD = os.environ['REDDIT_PASSWORD']
-PASSWORD = "Weilsoma13"
+PASSWORD = os.environ['REDDIT_PASSWORD']
 
 reddit = praw.Reddit(client_id="8ZETxx_lxHX5b6exbgMBzw",  # your client id
                      client_secret="88ZP0r0jT56J_jpCI5h5fc_eZr798g",  # your client secret

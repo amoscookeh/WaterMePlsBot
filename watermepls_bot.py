@@ -436,6 +436,17 @@ def announcement(update, context):
         context.bot.send_message(chat_id="26206762", text="Something went wrong with announcements")
 
 
+def msg_amos(update, context):
+    message = "Bot is running"
+
+    sent_message = context.bot.send_message(chat_id="26206762", text=message)
+
+    context.bot.delete_message(
+        chat_id="26206762",
+        message_id=sent_message.message_id
+    )
+
+
 def run_bot():
     # Persistence testing
     dict_persistence = DictPersistence()
@@ -450,6 +461,7 @@ def run_bot():
                         time=time(hour=9, minute=0, second=0))  # Reminder 2
     job_queue.run_daily(thank_you, days=(0, 1, 2, 3, 4, 5, 6), time=time(hour=14, minute=0, second=0))  # Thank you
     job_queue.run_repeating(check_weather, interval=7200, first=60)  # Weather
+    job_queue.run_repeating(msg_amos, interval=1770, first=60)  # Keep bot active
     job_queue.start()
 
     jobs = job_queue.jobs()

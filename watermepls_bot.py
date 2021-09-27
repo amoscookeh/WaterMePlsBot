@@ -425,12 +425,13 @@ def announcement(update, context):
     message = "Introducing... Nature Fact 🌲🌲🌲\n\nNow you are able to learn more about wildlife and nature using" \
               "/nature_fact ! Get a random fact about wildlife and nature to flex on your friends today!"
 
-    announcement_status = False
+    announcement_status = True
 
     if message is not None and announcement_status:
         chat_ids = get_all_ids()
         for chat_id in chat_ids:
             context.bot.send_message(chat_id=chat_id, text=message)
+        announcement_status = False
     else:
         context.bot.send_message(chat_id="26206762", text="Something went wrong with announcements")
 

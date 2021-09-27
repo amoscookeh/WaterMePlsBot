@@ -436,7 +436,7 @@ def announcement(update, context):
         context.bot.send_message(chat_id="26206762", text="Something went wrong with announcements")
 
 
-def msg_amos(update, context):
+def msg_amos(context):
     message = "Bot is running"
 
     sent_message = context.bot.send_message(chat_id="26206762", text=message)

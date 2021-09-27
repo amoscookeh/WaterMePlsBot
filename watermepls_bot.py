@@ -421,6 +421,20 @@ def nature_fact(update, context):
         text=msg)
 
 
+def announcement(update, context):
+    message = "Introducing... Nature Fact 🌲🌲🌲\n\nNow you are able to learn more about wildlife and nature using" \
+              "/nature_fact ! Get a random fact about wildlife and nature to flex on your friends today!"
+
+    announcement_status = False
+
+    if message is not None and announcement_status:
+        chat_ids = get_all_ids()
+        for chat_id in chat_ids:
+            context.bot.send_message(chat_id=chat_id, text=message)
+    else:
+        context.bot.send_message(chat_id="26206762", text="Something went wrong with announcements")
+
+
 def run_bot():
     # Persistence testing
     dict_persistence = DictPersistence()
@@ -448,6 +462,9 @@ def run_bot():
     dispatcher.add_handler(edit_user_handler)
     dispatcher.add_handler(CommandHandler('weather2h', weather_2h))
     dispatcher.add_handler(CommandHandler('nature_fact', nature_fact))
+
+    # For admin use
+    dispatcher.add_handler(CommandHandler('amos_announce', announcement))
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),

@@ -68,6 +68,8 @@ def main():
 
         msg = "🌲NATURE🌲 FACT: {}\n\nCredits: {}".format(fact['title'], fact['url'])
 
+        print(len(msg))
+
         print(msg)
 
         count += 1

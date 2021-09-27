@@ -24,35 +24,54 @@ def get_nature_facts():
     random_idx = random.randint(0, len(queries) - 1)
     random_query = [queries[random_idx]]
     query_limit = 50
-    random_idx = random.randint(0, query_limit / 2)
-    posts = []
+
+    titles = []
+    urls = []
+    bodies = []
 
     for item in random_query:
-        post_dict = {
-            "title": [],  # title of the post
-            # "score": [],  # score of the post
-            # "id": [],  # unique id of the post
-            "url": [],  # url of the post
-            # "comms_num": [],  # the number of comments on the post
-            # "created": [],  # timestamp of the post
-            "body": []  # the description of post
-        }
+        # post_dict = {
+        #     "title": [],  # title of the post
+        #     # "score": [],  # score of the post
+        #     # "id": [],  # unique id of the post
+        #     "url": [],  # url of the post
+        #     # "comms_num": [],  # the number of comments on the post
+        #     # "created": [],  # timestamp of the post
+        #     "body": []  # the description of post
+        # }
         for submission in subreddit.search(random_query, sort="top", limit=query_limit):
-            post_dict["title"].append(submission.title)
-            # post_dict["score"].append(submission.score)
-            # post_dict["id"].append(submission.id)
-            post_dict["url"].append(submission.url)
-            # post_dict["comms_num"].append(submission.num_comments)
-            # post_dict["created"].append(submission.created)
-            post_dict["body"].append(submission.selftext)
+            # post_dict["title"].append(submission.title)
+            # # post_dict["score"].append(submission.score)
+            # # post_dict["id"].append(submission.id)
+            # post_dict["url"].append(submission.url)
+            # # post_dict["comms_num"].append(submission.num_comments)
+            # # post_dict["created"].append(submission.created)
+            # post_dict["body"].append(submission.selftext)
+            titles.append(submission.title)
+            bodies.append(submission.selftext)
+            urls.append(submission.url)
 
-            posts.append(post_dict)
+    random_idx = random.randint(0, len(titles) / 2)
 
-    return posts[random_idx]
+    post = {
+        'title': titles[random_idx],
+        'body': bodies[random_idx],
+        'url': urls[random_idx],
+    }
+    return post
 
 
 def main():
-    print(get_nature_facts())
+    count = 0
+    for i in range(10):
+        fact = get_nature_facts()
+
+        msg = "🌲NATURE🌲 FACT: {}\n\nCredits: {}".format(fact['title'], fact['url'])
+
+        print(msg)
+
+        count += 1
+    print(count)
 
 
 if __name__ == '__main__':
